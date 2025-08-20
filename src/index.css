@@ -1,68 +1,138 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
+  /* Imagen de fondo gris claro tipo mapa */
+  background-image: url('/mnt/data/e95abd51-0a63-4e27-a03a-9604dde8439d.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Variables para light y dark */
+:root {
+  --bg: #e5e5e5;
+  --card-bg: #ffffffdd; /* semi-transparente */
+  --text: #222;
+  --primary: #0077ff;
+  --secondary: #888;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+[data-theme="dark"] {
+  --bg: #1e1e1e;
+  --card-bg: #2c2c2cdd; /* semi-transparente */
+  --text: #f5f5f5;
+  --primary: #66aaff;
+  --secondary: #ccc;
+}
+
+/* Layout principal */
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Cards */
+.card {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+/* Barra de búsqueda */
+.search-bar {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+.search-bar button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.6rem 1.2rem;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background 0.2s;
+  font-weight: bold;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.search-bar button:hover {
+  background-color: #005bcc;
+}
+
+/* Toggles */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.4rem 0.9rem;
+  border-radius: 12px;
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.toggle input {
+  cursor: pointer;
+}
+
+/* Horarios de pronóstico */
+.forecast-hour {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 12px;
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-right: 0.5rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Pronóstico 5 días */
+.forecast-day {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  background-color: var(--card-bg);
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.forecast-day:hover {
+  transform: translateX(5px);
 }
