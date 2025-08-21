@@ -2,52 +2,69 @@ import { useContext, useEffect, useState } from "react";
 import { WeatherContext } from "./context/WeatherContext";
 import { fetchWeatherByCity, fetchForecastByCity } from "./api/weather";
 
-// Componentes (los vas a ir creando en /components)
 import SearchBar from "./components/SearchBar";
+import ThemeToggle from "./components/ThemeToggle";
+import UnitToggle from "./components/UnitToggle";
+import CityList from "./components/CityList";
 import CurrentWeather from "./components/CurrentWeather";
 import HourlyForecast from "./components/HourlyForecast";
 import FiveDayForecast from "./components/FiveDayForecast";
-import CityList from "./components/CityList";
-import ThemeToggle from "./components/ThemeToggle";
-import UnitToggle from "./components/UnitToggle";
+
+import "./App.css";
 
 function App() {
   const { lastCity, unit } = useContext(WeatherContext);
+
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
 
+  // cargar clima cada vez que cambie ciudad o unidad
   useEffect(() => {
     const loadWeather = async () => {
-      const data = await fetchWeatherByCity(lastCity, unit);
-      const forecastData = await fetchForecastByCity(lastCity, unit);
-      setWeather(data);
-      setForecast(forecastData);
+      try {
+        const data = await fetchWeatherByCity(lastCity, unit);
+        const forecastData = await fetchForecastByCity(lastCity, unit);
+        setWeather(data);
+        setForecast(forecastData);
+      } catch (error) {
+        console.error("Error cargando clima:", error);
+      }
     };
+
     loadWeather();
   }, [lastCity, unit]);
 
-  if (!weather) return <p>Cargando clima...</p>;
-
   return (
-    <div className="app">
-      {/* Barra superior con búsqueda y toggles */}
-      <div style={{ display: "flex", gap: "1rem", justifyContent: "space-between", alignItems: "center" }}>
+    <div className="app-container">
+      {/* HEADER */}
+      <header className="header">
         <SearchBar />
-        <ThemeToggle />
-        <UnitToggle />
-      </div>
+        <div className="controls">
+          <ThemeToggle />
+          <UnitToggle />
+        </div>
+      </header>
 
-      {/* Clima actual */}
-      <CurrentWeather data={weather} />
+      {/* MAIN */}
+      <main className="main">
+        {/* LISTA DE CIUDADES */}
+        <aside className="city-list">
+          <CityList />
+        </aside>
 
-      {/* Pronóstico por horas */}
-      {forecast && <HourlyForecast data={forecast} />}
-
-      {/* Pronóstico 5 días */}
-      {forecast && <FiveDayForecast data={forecast} />}
-
-      {/* Lista de ciudades importantes */}
-      <CityList />
+        {/* CLIMA PRINCIPAL */}
+        <section className="weather-section">
+          <div className="card">
+            <CurrentWeather weather={weather} />
+          </div>
+          <div className="card">
+            <HourlyForecast forecast={forecast} />
+          </div>
+          <div className="card forecast">
+            <FiveDayForecast forecast={forecast} />
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
