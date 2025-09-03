@@ -1,7 +1,6 @@
 function HourlyForecast({ forecast }) {
     if (!forecast) return null;
   
-    // Primeras 6 horas
     const hours = forecast.list.slice(0, 6);
   
     return (

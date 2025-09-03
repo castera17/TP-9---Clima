@@ -1,7 +1,6 @@
 function FiveDayForecast({ forecast }) {
   if (!forecast) return null;
 
-  // Agrupar por día
   const grouped = forecast.list.reduce((acc, item) => {
     const d = new Date(item.dt * 1000);
     const key = d.toLocaleDateString("es-ES", { weekday: "short" });
@@ -9,13 +8,11 @@ function FiveDayForecast({ forecast }) {
     return acc;
   }, {});
 
-  // Convertir a arreglo (primeros 5 días)
   const days = Object.entries(grouped).slice(0, 5).map(([day, arr]) => {
     const temps = arr.map(a => a.main.temp);
     const avg = Math.round(temps.reduce((s, t) => s + t, 0) / temps.length);
     const min = Math.round(Math.min(...temps));
     const max = Math.round(Math.max(...temps));
-    // uso el primer icono/desc del día
     const { icon, description } = arr[0].weather[0];
     return { day, avg, min, max, icon, desc: description };
   });

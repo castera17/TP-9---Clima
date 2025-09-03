@@ -13,12 +13,15 @@ import FiveDayForecast from "./components/FiveDayForecast";
 import "./App.css";
 
 function App() {
-  const { lastCity, unit } = useContext(WeatherContext);
+  const { lastCity, unit, theme } = useContext(WeatherContext);
 
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
 
-  // cargar clima cada vez que cambie ciudad o unidad
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   useEffect(() => {
     const loadWeather = async () => {
       try {
@@ -36,7 +39,6 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* HEADER */}
       <header className="header">
         <SearchBar />
         <div className="controls">
@@ -45,14 +47,11 @@ function App() {
         </div>
       </header>
 
-      {/* MAIN */}
       <main className="main">
-        {/* LISTA DE CIUDADES */}
         <aside className="city-list">
           <CityList />
         </aside>
 
-        {/* CLIMA PRINCIPAL */}
         <section className="weather-section">
           <div className="card">
             <CurrentWeather weather={weather} />

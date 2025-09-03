@@ -9,7 +9,7 @@ function SearchBar() {
     e.preventDefault();
     if (city.trim() !== "") {
       changeCity(city);
-      setCity(""); // limpiar input
+      setCity("");
     }
   };
 
