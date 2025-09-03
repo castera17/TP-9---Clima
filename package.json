@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://castera17.github.io/TP-9---Clima.git",
+  "homepage": "https://castera17.github.io/TP-9---Clima",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
